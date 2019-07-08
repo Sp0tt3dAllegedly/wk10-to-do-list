@@ -7,7 +7,9 @@ function addTask(event){
         doBy: $('#doByIn').val(),
         taskIn: $('#taskIn').val(),
         name: $('#nameIn').val()
-
+        // object to send includes database column names as properties -
+        // without 'done' as status default is set to 'false' prior to being
+        // removed from DOM by deleteTask click action
     }
     console.log( 'in addTask:', objectToSend );
     $.ajax({
@@ -20,7 +22,7 @@ function addTask(event){
     }).catch( function( err ){
         alert( 'error adding task:', err );
     })
-}
+} //end addTask function
 
 function getTasks(){
     $.ajax({
@@ -58,23 +60,24 @@ function deleteTask(){
 function onReady(){
     getTasks();
     $( '#addTaskButton' ).on( 'click', addtask );
-    $( '#taskListOut' ).on( 'click', '.deleteButton', deleteTask );
-    $( '#taskListOut' ).on( 'click', '.togglePendingButton', togglePending );
+    $( '#outputDiv' ).on( 'click', '.deleteButton', deleteTask );
+    $( '#outputDiv' ).on( 'click', '.toggleDoneButton', toggleDone );
 }
 
-function togglePending(){
+function toggleDone(){
     const id = $( this ).data( 'id' );
-    const pendingStatus = $( this ).data( 'pending' );
-    console.log( 'in togglePending:', id, pendingStatus );
+    const doneStatus = $( this ).data( 'done' );
+    console.log( 'in toggleDone:', id, doneStatus );
     $.ajax({
         type: 'PUT',
         url: `/tasks/${ id }`,
-        data: { newPending: !pendingStatus}
+        data: { newDone: !doneStatus}
     }).then( function( response ){
         console.log( 'back from PUT:', response );
         getTasks();
-        if ($(this).data === true){
-            $(this).addClass("doneTask")
+        if ( doneStatus === true ){
+            $(this).addClass("doneTask");
+        }else{
         }
         }).catch( function (err){
         alert( 'error updating:', err );
