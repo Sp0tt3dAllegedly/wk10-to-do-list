@@ -17,9 +17,9 @@ app.listen( port, ()=>{
 })
 
 // routes
-app.delete( '/items/:id', ( req, res )=>{
-    console.log( '/items DELETE hit:', req.params.id );
-    const query = `DELETE FROM "items" WHERE id=$1;`;
+app.delete( '/tasks/:id', ( req, res )=>{
+    console.log( '/tasks DELETE hit:', req.params.id );
+    const query = `DELETE FROM "tasks" WHERE id=$1;`;
     const values = [ req.params.id ];
     pool.query( query, values ).then( ( response )=>{
         res.sendStatus( 200 );
@@ -27,39 +27,39 @@ app.delete( '/items/:id', ( req, res )=>{
         console.log( 'error with DELETE:', err );
         res.sendStatus( 500 );
     })
-}) // end /items delete
+}) // end /tasks delete
 
-app.get( '/items', ( req, res )=>{
-    console.log( 'in /items GET' );
-    const query = `SELECT * from "items";`;
+app.get( '/tasks', ( req, res )=>{
+    console.log( 'in /tasks GET' );
+    const query = `SELECT * from "tasks";`;
     pool.query( query ).then( ( results )=>{
         res.send( results.rows );
     }).catch( (err )=>{
         console.log( 'ERROR with GET:', err );
         res.sendStatus( 500 );
     })
-}) // end /items GET
+}) // end /tasks GET
 
-app.post( '/items', ( req, res )=>{
-    console.log( 'in /items POST:', req.body );
-    const query = `INSERT INTO "items" ( "size", "color", "name" ) VALUES ( $1, $2, $3 );`;
-    const values = [ req.body.size, req.body.color, req.body.name ];
+app.post( '/tasks', ( req, res )=>{
+    console.log( 'in /tasks POST:', req.body );
+    const query = `INSERT INTO "tasks" ( "type", "do-by", "task" "name" ) VALUES ( $1, $2, $3, $4 );`;
+    const values = [ req.body.type, req.body.do-by, req.body.task, req.body.name ];
     pool.query( query, values ).then( ( results )=>{
         res.sendStatus( 201 );
     }).catch( ( err )=>{
         console.log( 'ERROR with INSERT:', err );
         res.sendStatus( 500 );
     })
-}) //end /items POST
+}) //end /tasks POST
 
-app.put( '/items/:id', ( req, res )=>{
-    console.log( '/items PUT:', req.params.id, req.body );
-    const query = `UPDATE "items" SET pending=$1 WHERE id=$2;`;
-    const values =[ req.body.newPending, req.params.id ];
+app.put( '/tasks/:id', ( req, res )=>{
+    console.log( '/tasks PUT:', req.params.id, req.body );
+    const query = `UPDATE "tasks" SET done=$1 WHERE id=$2;`;
+    const values =[ req.body.newDone, req.params.id ];
     pool.query( query, values ).then( (results)=>{
         res.sendStatus( 200 );
     }).catch( ( err )=>{
         console.log( 'error with update:', err );
         res.sendStatus( 500 );
     })
-}) // end /items put
+}) // end /tasks put

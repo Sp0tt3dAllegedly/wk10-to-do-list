@@ -31,7 +31,7 @@ if ( process.env.DATABASE_URL){
 else {
     // local config set up   
   config = {
-    database: 'playfair_inventory',
+    database: 'To-Do-List-database',
     host: 'localhost',
     port: 5432,
     max: 12,
@@ -46,7 +46,7 @@ pool.on( 'connect', ()=>{
 }) // end db error
 
 pool.on( 'error', ( err )=>{
-    console.log( 'ERROR connecting to BD:', err );
+    console.log( 'ERROR connecting to DB:', err );
 }) //end db error
 
 // exports

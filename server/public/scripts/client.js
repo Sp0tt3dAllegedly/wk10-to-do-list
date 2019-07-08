@@ -1,62 +1,65 @@
 $( document ).ready( onReady );
 
-function addItem( e ){
-    e.preventDefault();
+function addTask(event){
+    event.preventDefault();
     let objectToSend = {
-        size: $('#sizeIn').val(),
-        color: $('#colorIn').val(),
+        taskType: $('#taskTypeIn').val(),
+        doBy: $('#doByIn').val(),
+        taskIn: $('#taskIn').val(),
         name: $('#nameIn').val()
+
     }
-    console.log( 'in addItem:', objectToSend );
+    console.log( 'in addTask:', objectToSend );
     $.ajax({
         type: 'POST',
-        url: '/items',
+        url: '/tasks',
         data: objectToSend
     }).then( function( response ){
         console.log( 'back from POST:', response );
-        getItems();
+        getTasks();
     }).catch( function( err ){
-        alert( 'error adding item:', err );
+        alert( 'error adding task:', err );
     })
 }
 
-function getItems(){
+function getTasks(){
     $.ajax({
         type: 'GET',
-        url: '/items'
+        url: '/tasks'
     }).then( function( response ){
-        let el = $( '#inventoryOut' );
+        let el = $( '#outputDiv' );
         el.empty();
         for( let i=0; i<response.length; i++){
-            el.append( `<li>${ response[i].size } ${ response[i].color} ${ response[i].name}
-            <button class="sellButton" data-id="${ response[i].id}">Sell</button>
-            <button class="togglePendingButton" data-id="${ response[i].id}"
-            data-pending="${ response[i].pending}">Pending: ${ response[i].pending }</button></li>`)
+            el.append(`<section><ul><li>${ response[i].taskType } ${ response[i].doBy} ${ response[i].taskIn} ${ response[i].name}
+            <button class="deleteButton" data-id="${ response[i].id}">Delete</button>
+            <button class="toggleDoneButton" data-id="${ response[i].id}"
+            data-pending="${ response[i].done}">Done?: ${ response[i].done }
+            </button></li></ul></section>`)
         } //end for
     }).catch( function( err ){
-        alert( 'Error getting inventory:', err );
+        alert( 'Error getting taskList:', err );
     })
 }
 
-function sell(){
+function deleteTask(){
     const id = $( this ).data( 'id' );
-    console.log( 'in sell:', id );
+    console.log( 'in deleteTask:', id );
     $.ajax({
         type: 'DELETE',
-        url: `/items/${ id }`
+        url: `/tasks/${ id }`
     }).then( function( response ){
         console.log( 'back from DELETE:', response );
-        getItems();
+        getTasks();
     }).catch( function( err ){
         alert( 'Error with Delete:', err );
     })
 }
 
 function onReady(){
-    getItems();
-    $( '#addItemButton' ).on( 'click', addItem );
-    $( '#inventoryOut' ).on( 'click', '.sellButton', sell );
-    $( '#inventoryOut' ).on( 'click', '.togglePendingButton', togglePending );
+    getTasks();
+    $( '#addTaskButton' ).on( 'click', addtask );
+    $( '#taskListOut' ).on( 'click', '.deleteButton', deleteTask );
+    $( '#taskListOut' ).on( 'click', '.togglePendingButton', togglePending );
 }
 
 function togglePending(){
@@ -65,12 +68,15 @@ function togglePending(){
     console.log( 'in togglePending:', id, pendingStatus );
     $.ajax({
         type: 'PUT',
-        url: `/items/${ id }`,
+        url: `/tasks/${ id }`,
         data: { newPending: !pendingStatus}
     }).then( function( response ){
         console.log( 'back from PUT:', response );
-        getItems();
-    }).catch( function (err){
+        getTasks();
+        if ($(this).data === true){
+            $(this).addClass("doneTask")
+        }
+        }).catch( function (err){
         alert( 'error updating:', err );
     })
 }

@@ -6,36 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="vendors/jquery-3.4.1.min.js"></script>
     <script src="scripts/client.js"></script>
-    <title>Playfair Week 9 Review</title>
+    <!-- <link rel="stylesheet" href=""> -->
+    <link rel="stylesheet" href="styles/styleOver.css">
+    <title>SQL To-Do List</title>
 </head>
 <body>
-    <h1>Playfair Week 9 Review</h1>
+    <h1>Your To-Do list!</h1>
     <div id="inputDiv">
         <form>
-            <select id="sizeIn">
-                <option>tiny</option>
-                <option>small</option>
-                <option>medium</option>
-                <option>large</option>
-                <option>huge</option>
-                <option>enormous</option>
+            <select id="taskTypeIn">
+                <option>Inside</option>
+                <option>Outside</option>
+                <option>Group</option>
+                <option>Quick-Fixer</option>
             </select>
-            <select id="colorIn">
-                <option>red</option>
-                <option>orange</option>
-                <option>yellow</option>
-                <option>green</option>
-                <option>blue</option>
-                <option>purple</option>
+            <select id="doByIn">
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
             </select>
-            <input type="text" id="nameIn" placeholder="name">
+            <input type="text" id="taskIn" placeholder="What are we doing?">
+            <input type="text" id="nameIn" placeholder="Who's it for?">
             <button type="submit" id="addItemButton">Submit</button>
         </form>
     </div>
+    <main>
     <div id="outputDiv">
-        <ul id="inventoryOut">
-
-        </ul>
+        
     </div>
+    </main>
+    
 </body>
 </html>
