@@ -71,7 +71,7 @@ function toggleDone(){
     $.ajax({
         type: 'PUT',
         url: `/tasks/${ id }`,
-        data: { newDone: !doneStatus}
+        data: { newStatus: !doneStatus}
     }).then( function( response ){
         console.log( 'back from PUT:', response );
         getTasks();

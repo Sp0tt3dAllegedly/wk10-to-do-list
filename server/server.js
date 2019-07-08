@@ -42,8 +42,8 @@ app.get( '/tasks', ( req, res )=>{
 
 app.post( '/tasks', ( req, res )=>{
     console.log( 'in /tasks POST:', req.body );
-    const query = `INSERT INTO "tasks" ( "type", "do-by", "task" "name" ) VALUES ( $1, $2, $3, $4 );`;
-    const values = [ req.body.type, req.body.do-by, req.body.task, req.body.name ];
+    const query = `INSERT INTO "tasks" ( "taskType", "doBy", "taskIn", "name" ) VALUES ( $1, $2, $3, $4 );`;
+    const values = [ req.body.taskType, req.body.doBy, req.body.taskIn, req.body.name ];
     pool.query( query, values ).then( ( results )=>{
         res.sendStatus( 201 );
     }).catch( ( err )=>{
@@ -55,7 +55,7 @@ app.post( '/tasks', ( req, res )=>{
 app.put( '/tasks/:id', ( req, res )=>{
     console.log( '/tasks PUT:', req.params.id, req.body );
     const query = `UPDATE "tasks" SET done=$1 WHERE id=$2;`;
-    const values =[ req.body.newDone, req.params.id ];
+    const values =[ req.body.newStatus, req.params.id ];
     pool.query( query, values ).then( (results)=>{
         res.sendStatus( 200 );
     }).catch( ( err )=>{
