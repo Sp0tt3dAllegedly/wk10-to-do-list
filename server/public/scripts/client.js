@@ -32,7 +32,7 @@ function getTasks(){
         let el = $( '#outputDiv' );
         el.empty();
         for( let i=0; i<response.length; i++){
-            el.append(`<section>${ response[i].taskType } ${ response[i].doBy} ${ response[i].taskIn} ${ response[i].name}
+            el.append(`<section id="newTask">${ response[i].taskType } ${ response[i].doBy} ${ response[i].taskIn} ${ response[i].name}
             <button class="deleteButton" data-id="${ response[i].id}">Delete</button>
             <button class="toggleDoneButton" data-id="${ response[i].id}"
             data-pending="${ response[i].done}">Done?: ${ response[i].done }
@@ -57,12 +57,17 @@ function deleteTask(){
     })
 }
 
+function doneStatusHandler() {
+    $('#newTask').addClass('doneTask');
+}
+
 function onReady(){
     getTasks();
     $( '#addTaskButton' ).on( 'click', addTask );
     $( '#outputDiv' ).on( 'click', '.deleteButton', deleteTask );
-    $( '#outputDiv' ).on( 'click', '.toggleDoneButton', toggleDone );
+    $('#outputDiv').on('click', '.toggleDoneButton', toggleDone, doneStatusHandler);
 }
+
 
 function toggleDone(){
     const id = $( this ).data( 'id' );
@@ -75,11 +80,6 @@ function toggleDone(){
     }).then( function( response ){
         console.log( 'back from PUT:', response );
         getTasks();
-        if ( doneStatus === true ){
-            $(this).addClass("doneTask");
-        } else {
-console.log('please delete and add again for next day if task is not done!');  
-        }
         }).catch( function (err){
         alert( 'error updating:', err );
     })
