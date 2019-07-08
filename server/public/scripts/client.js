@@ -32,11 +32,11 @@ function getTasks(){
         let el = $( '#outputDiv' );
         el.empty();
         for( let i=0; i<response.length; i++){
-            el.append(`<section><ul><li>${ response[i].taskType } ${ response[i].doBy} ${ response[i].taskIn} ${ response[i].name}
+            el.append(`<section>${ response[i].taskType } ${ response[i].doBy} ${ response[i].taskIn} ${ response[i].name}
             <button class="deleteButton" data-id="${ response[i].id}">Delete</button>
             <button class="toggleDoneButton" data-id="${ response[i].id}"
             data-pending="${ response[i].done}">Done?: ${ response[i].done }
-            </button></li></ul></section>`)
+            </button></section>`)
         } //end for
     }).catch( function( err ){
         alert( 'Error getting taskList:', err );
@@ -59,7 +59,7 @@ function deleteTask(){
 
 function onReady(){
     getTasks();
-    $( '#addTaskButton' ).on( 'click', addtask );
+    $( '#addTaskButton' ).on( 'click', addTask );
     $( '#outputDiv' ).on( 'click', '.deleteButton', deleteTask );
     $( '#outputDiv' ).on( 'click', '.toggleDoneButton', toggleDone );
 }
@@ -77,7 +77,8 @@ function toggleDone(){
         getTasks();
         if ( doneStatus === true ){
             $(this).addClass("doneTask");
-        }else{
+        } else {
+console.log('please delete and add again for next day if task is not done!');  
         }
         }).catch( function (err){
         alert( 'error updating:', err );
