@@ -8,6 +8,14 @@ create table "tasks" (
 );
 
 
-
-INSERT INTO "tasks" ("taskType", "do-by", "taskIn", "name") 
-                VALUES('Inside', 'Monday', 'Laundry', 'Jake');
+INSERT INTO "tasks" ("taskType", "doBy", "taskIn", "name") 
+    VALUES('Inside', 'Monday', 'Laundry', 'Jake' );
+    
+INSERT INTO "tasks" ("taskType", "doBy", "taskIn", "name") 
+    VALUES('Group', 'Wednesday', 'Dishes', 'Jake' );
+    
+INSERT INTO "tasks" ("taskType", "doBy", "taskIn", "name") 
+    VALUES('Quick-Fixer', 'Friday', 'Lawn Care', 'Jake' );
+    
+INSERT INTO "tasks" ("taskType", "doBy", "taskIn", "name") 
+    VALUES('Outside', 'Sunday', 'Vacuum', 'Jake' );
